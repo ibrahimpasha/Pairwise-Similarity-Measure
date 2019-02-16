@@ -16,8 +16,8 @@ After finding all (word, count) pair in all documents, I sorted them in descendi
 ##### 2. Create Inverted index for the 1000 most popular words.
 Inverted index will be created for the 1000 most popular words found in step 1.
 Inverted index will be of the form
-term1: doc1:weight1_1,doc2:weight2_1,doc3:weight3_1,…
-term2: doc1:weight1_2,doc2:weight2_2,doc3:weight3_2,…
+`term1: doc1:weight1_1,doc2:weight2_1,doc3:weight3_1,…
+term2: doc1:weight1_2,doc2:weight2_2,doc3:weight3_2,…`
 …
 where weightx_y is: no. of occurrences of termx in document y /total number of words in document y
 
@@ -32,9 +32,9 @@ where weightx_y is: no. of occurrences of termx in document y /total number of w
 (word, (filename, word_count/total_words_in_file))
 7.	Then performed groupByKey operation on word, and saved the result in a file.
 ##### Output will in the form:
-'(word, ((filename, weight), (filename, weight), …))'
+`(word, ((filename, weight), (filename, weight), …))
 (word, ((filename, weight), (filename, weight), …))
-…'
+…`
 ##### Observations:
 1.	First, I found total words in document by splitting the content of file and adding each content to list then calculating length of list. It caused the program to run slower, then I simply used __len(contents.split())__ function to count the words in file, since counting the number of words in list doesn’t depend on removing stop words. As it is not mentioned in the problem description, I counted stop words also.
 2.	This program taking so long to run, The reason behind this which I feel is groupByKey() will take lot of time than reduceByKey() function since it takes more operation on each key.
@@ -46,8 +46,8 @@ With V being the vocabulary (determined in part 1) and the weights having been d
 2.	After calculating the pairwise similarities, used map function to emit ((doc1, doc2), weight) as key-value pairs.
 3.	After that reduced by key and added the weights to get the similarity matrix.
 ##### Output will be of the form:
-'((doc1, doc2), similarity) 
-((doc1, doc3), similarity) ….'
+`((doc1, doc2), similarity) 
+((doc1, doc3), similarity) ….`
 ##### Observations:
 1.	While calculating similarities, pairs like ((doc1, doc2), weights) and ((doc2, doc1), weights) will produce different results thinking that two are different keys. In order to overcome the bug I used sorted() to treat both the keys same.
 ##### 4. Ten Most similar or identical pairs of documents:
@@ -59,13 +59,13 @@ With V being the vocabulary (determined in part 1) and the weights having been d
 Input path and output path are to be provided in arguments as shown below.
 Follow the sequence to run the codes.
 1.	Most Popular Words:
-'''spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_most_popular.py /cosc6339_hw2/large-dataset/* /bigd43/1000_most_exe_15'''
+```spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_most_popular.py /cosc6339_hw2/large-dataset/* /bigd43/1000_most_exe_15```
 2.	Inverted Index:
-'''spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_inverted_index.py /bigd43/1000_most_exe_15/* /cosc6339_hw2/large-dataset/* /bigd43/inverted_index_exe_15'''
+```spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_inverted_index.py /bigd43/1000_most_exe_15/* /cosc6339_hw2/large-dataset/* /bigd43/inverted_index_exe_15```
 3.	Similarity Matrix:
-'''spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_similarity_matrix.py /bigd43/inverted_index_exe_15/* /bigd43/similarity_matrix_exe_15'''
+```spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_similarity_matrix.py /bigd43/inverted_index_exe_15/* /bigd43/similarity_matrix_exe_15```
 4.	Top 10 Similar Documents:
-'''spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 5 --executor-cores 3  --executor-memory 10G pyspark_top_10.py /bigd43/similarity_matrix_exe_15/* /bigd43/top_10_exe_15'''
+```spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 5 --executor-cores 3  --executor-memory 10G pyspark_top_10.py /bigd43/similarity_matrix_exe_15/* /bigd43/top_10_exe_15```
 ##### Resources Used:
 1.	Hadoop version 3.0.3
 2.	Python version 2.7.13
@@ -85,7 +85,7 @@ Follow the sequence to run the codes.
 ##### Results:
 I have run the code for large data set on executors 5, 10, and 15 with 3 cores per executor and 10GB executor memory. I have taken two measurements for the inverted index and similarity matrix tasks.Below are the execution times for the tasks on large data set.
 
-![Alt Text](Pairwise-Similarity-Measure/pyspark_most_popular.py)
+![Alt Text](Pairwise-Similarity-Measure/stats/most_popular_graph.JPG)
  
 ##### Findings:
 From the measurements what I observed is that if we increase the number of executors and executor cores, the time it will take for the task to execute will decrease. I wouldn’t completely accept that these parameters will definitely improve the performance, but there will be other parameters that will affect the performance like availability of resources and load on the cluster. For instance, while running the Inverted index task (measurement 1) even the number of executors increased, the execution time did not decrease. I believe that the reason was, at that time the load on the cluster was high since number of job submission were heavier than the cluster could normally handle. Also, it will depend on the cluster memory that was reserved for a job submission. If a job summitted beyond the reserved memory, other jobs will be affected.

@@ -2,7 +2,7 @@
 #### Duplicate Detection
 Often in real world, entities have two are more representations and they are not identical (Fuzzy duplicates). Perform task to Discover the multiple representation of same real-world object in a large data set.
 
-Algorithim: https://www.aclweb.org/anthology/P/P08/P08-2067.pdf
+__Algorithim:__ https://www.aclweb.org/anthology/P/P08/P08-2067.pdf
 #### Solution Strategy:
 #### 1. Finding 1000 most popular words:
 For finding the most popular words, I first found word and number of times it is repeated in all documents and then took top 1000 of the final list with map reduce framework.
@@ -115,6 +115,8 @@ I have run the code for large data set on executors 5, 10, and 15 with 3 cores p
 #### Findings:
 From the measurements what I observed is that if we increase the number of executors and executor cores, the time it will take for the task to execute will decrease. I wouldn’t completely accept that these parameters will definitely improve the performance, but there will be other parameters that will affect the performance like availability of resources and load on the cluster. For instance, while running the Inverted index task (measurement 1) even the number of executors increased, the execution time did not decrease. I believe that the reason was, at that time the load on the cluster was high since number of job submission were heavier than the cluster could normally handle. Also, it will depend on the cluster memory that was reserved for a job submission. If a job summitted beyond the reserved memory, other jobs will be affected.
 
-```Author:
+```
+Author:
 Ibrahim Mohammad:
-imohammad@uh.edu```
+imohammad@uh.edu
+```

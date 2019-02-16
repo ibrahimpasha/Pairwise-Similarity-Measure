@@ -1,6 +1,8 @@
 ### Pairwise Similarity Measure of Documents
 #### Duplicate Detection
 Often in real world, entities have two are more representations and they are not identical (Fuzzy duplicates). Perform task to Discover the multiple representation of same real-world object in a large data set.
+https://hpi.de/fileadmin/user_upload/fachgebiete/naumann/folien/SS13/DPDC/DPDC_11_Duplicate_Detection.pdf
+
 #### Solution Strategy:
 #### 1. Finding 1000 most popular words:
 For finding the most popular words, I first found word and number of times it is repeated in all documents and then took top 1000 of the final list with map reduce framework.

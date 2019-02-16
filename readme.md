@@ -17,8 +17,8 @@ After finding all (word, count) pair in all documents, I sorted them in descendi
 Inverted index will be created for the 1000 most popular words found in step 1.
 Inverted index will be of the form
 
-`term1: doc1:weight1_1,doc2:weight2_1,doc3:weight3_1,…
-term2: doc1:weight1_2,doc2:weight2_2,doc3:weight3_2,…`
+`term1: doc1:weight1_1, doc2:weight2_1, doc3:weight3_1,…
+term2: doc1:weight1_2, doc2:weight2_2, doc3:weight3_2,…`
 …
 
 where weightx_y is: no. of occurrences of termx in document y /total number of words in document y
@@ -62,42 +62,42 @@ With V being the vocabulary (determined in part 1) and the weights having been d
 ##### Steps to Run the code:
 Input path and output path are to be provided in arguments as shown below.
 Follow the sequence to run the codes.
-1.	Most Popular Words:
-```
-spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_most_popular.py /cosc6339_hw2/large-dataset/* /bigd43/1000_most_exe_15
-```
-2.	Inverted Index:
-```
-spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_inverted_index.py /bigd43/1000_most_exe_15/* /cosc6339_hw2/large-dataset/* /bigd43/inverted_index_exe_15
-```
-3.	Similarity Matrix:
-```
-spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_similarity_matrix.py /bigd43/inverted_index_exe_15/* /bigd43/similarity_matrix_exe_15
-```
-4.	Top 10 Similar Documents:
-```
-spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 5 --executor-cores 3  --executor-memory 10G pyspark_top_10.py /bigd43/similarity_matrix_exe_15/* /bigd43/top_10_exe_15
-```
+##### 1.	Most Popular Words:
+
+```spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_most_popular.py /cosc6339_hw2/large-dataset/* /bigd43/1000_most_exe_15```
+##### 2.	Inverted Index:
+
+```spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_inverted_index.py /bigd43/1000_most_exe_15/* /cosc6339_hw2/large-dataset/* /bigd43/inverted_index_exe_15```
+##### 3.	Similarity Matrix:
+
+```spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_similarity_matrix.py /bigd43/inverted_index_exe_15/* /bigd43/similarity_matrix_exe_15```
+##### 4.	Top 10 Similar Documents:
+
+```spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 5 --executor-cores 3  --executor-memory 10G pyspark_top_10.py /bigd43/similarity_matrix_exe_15/* /bigd43/top_10_exe_15```
 ##### Resources Used:
 1.	Hadoop version 3.0.3
 2.	Python version 2.7.13
 3.	Pyspark version 2.3.1
 4.	Whale Cluster
-- a.	50 Appro 1522H nodes (whale-001 to whale-057), each node with
+a.	50 Appro 1522H nodes (whale-001 to whale-057), each node with
 i.	two 2.2 GHz quad-core AMD Opteron processor (8 cores total)
 ii.	16 GB main memory
 iii.	Gigabit Ehternet
 iv.	4xDDR InfiniBand HCAs (not used at the moment)
-- b.	Network Interconnect
+b.	Network Interconnect
 i.	144 port 4xInfiniBand DDR Voltaire Grid Director ISR 2012 switch (donation from TOTAL)
 ii.	two 48 port HP GE switch
-- c.	Storage
+c.	Storage
 i.	4 TB NFS /home file system (shared with crill)
 ii.	~7 TB HDFS file system (using triple replication)
 ##### Results:
 I have run the code for large data set on executors 5, 10, and 15 with 3 cores per executor and 10GB executor memory. I have taken two measurements for the inverted index and similarity matrix tasks.Below are the execution times for the tasks on large data set.
 
 ![Alt Text](stats/most_popular_graph.JPG)
+![Alt Text](stats/inverted_index_graph.JPG)
+![Alt Text](stats/similarity_matrix_graph.JPG)
+![Alt Text](stats/top_10_graph.JPG)
+
  
 ##### Findings:
 From the measurements what I observed is that if we increase the number of executors and executor cores, the time it will take for the task to execute will decrease. I wouldn’t completely accept that these parameters will definitely improve the performance, but there will be other parameters that will affect the performance like availability of resources and load on the cluster. For instance, while running the Inverted index task (measurement 1) even the number of executors increased, the execution time did not decrease. I believe that the reason was, at that time the load on the cluster was high since number of job submission were heavier than the cluster could normally handle. Also, it will depend on the cluster memory that was reserved for a job submission. If a job summitted beyond the reserved memory, other jobs will be affected.

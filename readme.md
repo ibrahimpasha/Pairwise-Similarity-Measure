@@ -66,21 +66,17 @@ Input path and output path are to be provided in arguments as shown below.
 Follow the sequence to run the codes.
 #### 1.	Most Popular Words:
 
-```
-spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_most_popular.py /cosc6339_hw2/large-dataset/* /bigd43/1000_most_exe_15```
+```spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_most_popular.py /cosc6339_hw2/large-dataset/* /bigd43/1000_most_exe_15```
 #### 2.	Inverted Index:
 
-```
-spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_inverted_index.py /bigd43/1000_most_exe_15/* /cosc6339_hw2/large-dataset/* /bigd43/inverted_index_exe_15```
+```spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_inverted_index.py /bigd43/1000_most_exe_15/* /cosc6339_hw2/large-dataset/* /bigd43/inverted_index_exe_15```
+
 #### 3.	Similarity Matrix:
 
-```spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_similarity_matrix.py /bigd43/inverted_index_exe_15/* /bigd43/similarity_matrix_exe_15
-```
+```spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 15 --executor-cores 3  --executor-memory 10G pyspark_similarity_matrix.py /bigd43/inverted_index_exe_15/* /bigd43/similarity_matrix_exe_15```
 #### 4.	Top 10 Similar Documents:
 
-```
-spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 5 --executor-cores 3  --executor-memory 10G pyspark_top_10.py /bigd43/similarity_matrix_exe_15/* /bigd43/top_10_exe_15
-```
+```spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 5 --executor-cores 3  --executor-memory 10G pyspark_top_10.py /bigd43/similarity_matrix_exe_15/* /bigd43/top_10_exe_15```
 #### Resources Used:
 1.	Hadoop version 3.0.3
 2.	Python version 2.7.13

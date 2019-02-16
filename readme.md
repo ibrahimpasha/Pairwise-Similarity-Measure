@@ -77,6 +77,7 @@ Follow the sequence to run the codes.
 #### 4.	Top 10 Similar Documents:
 
 ```spark-submit --master yarn --deploy-mode cluster --conf spark.ui.port=4070 --num-executors 5 --executor-cores 3  --executor-memory 10G pyspark_top_10.py /bigd43/similarity_matrix_exe_15/* /bigd43/top_10_exe_15```
+
 #### Resources Used:
 1.	Hadoop version 3.0.3
 2.	Python version 2.7.13
@@ -86,20 +87,13 @@ Follow the sequence to run the codes.
      - i.	two 2.2 GHz quad-core AMD Opteron processor (8 cores total)
      - ii.	16 GB main memory
      - iii.	Gigabit Ehternet
-
      - iv.	4xDDR InfiniBand HCAs (not used at the moment)
-
    - b.	Network Interconnect
-
      - i.	144 port 4xInfiniBand DDR Voltaire Grid Director ISR 2012 switch (donation from TOTAL)
-
      - ii.	two 48 port HP GE switch
-
-    - c.	Storage
-
-      - i.	4 TB NFS /home file system (shared with crill)
-
-      - ii.	~7 TB HDFS file system (using triple replication)
+   - c.	Storage
+     - i.	4 TB NFS /home file system (shared with crill)
+     - ii.	~7 TB HDFS file system (using triple replication)
 
 #### Results:
 I have run the code for large data set on executors 5, 10, and 15 with 3 cores per executor and 10GB executor memory. I have taken two measurements for the inverted index and similarity matrix tasks.Below are the execution times for the tasks on large data set.
